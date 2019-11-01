@@ -86,28 +86,25 @@ namespace PixelShaderTest
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            float[] testFloatArray = { 3, 7 };
             Vector2[] testFloat2Array = new Vector2[2];
 
 
             float widthOfOnePixel = 1.0f / surgeTexture.Width;
-            float widthOfHalfPixel = widthOfOnePixel / 2;
+            float widthOfHalfPixel = widthOfOnePixel / 2.0f;
 
+            float heightOfOnePixel = 1.0f / surgeTexture.Height;
+            float heighOfHalfPixel = heightOfOnePixel / 2.0f;
 
 
             float textureCoordianteX = (15.0f * widthOfOnePixel) + widthOfHalfPixel;
-            float textureCoordianteY = 15.0f / surgeTexture.Height;
+            float textureCoordianteY = (16.0f * heightOfOnePixel) + heighOfHalfPixel;
 
 
             testFloat2Array[0] = new Vector2(textureCoordianteX, textureCoordianteY);
             testFloat2Array[1] = new Vector2(5, 7);
 
-
-
-            // TODO: Add your drawing code here
             //            spriteBatch.Begin();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-//            effect.Parameters["testFloatArray"].SetValue(testFloatArray);
             effect.Parameters["testFloat2Array"].SetValue(testFloat2Array);
             effect.CurrentTechnique.Passes[0].Apply();
             spriteBatch.Draw(backgroundTexture2D, new Vector2(0, 0), Color.White);

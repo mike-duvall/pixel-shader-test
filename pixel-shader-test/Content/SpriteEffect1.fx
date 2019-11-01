@@ -9,7 +9,9 @@
 
 Texture2D SpriteTexture;
 sampler s0;
-float epsilon = 0.0001f;
+float epsilon = 0.001f;
+float testFloatArray[2];
+float2 testFloat2Array[2];
 
 sampler2D SpriteTextureSampler = sampler_state
 {
@@ -37,6 +39,21 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 
 	if(color.a && difRed < epsilon && difGreen < epsilon && difBlue < epsilon)
 		color.rgb = 0.8;	
+
+	float pixelToSetX =  testFloat2Array[0].x;
+//	float pixelToSetY =  testFloat2Array[0].y;
+
+	float diff1 = abs(input.TextureCoordinates.x - pixelToSetX);
+//	float diff2 = abs(input.TextureCoordinates.y - pixelToSetY);
+
+
+	if( diff1 < epsilon) {
+//	if(color.a && diff1 < epsilon) {
+//	if(diff1 < 0.0111111114f) {	
+		color.b = 1.0f;
+		color.rg = 0.0f;
+	}
+
 
 	return color;
 }

@@ -92,9 +92,9 @@ namespace PixelShaderTest
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             effect.Parameters["shadow_sampler"].SetValue(shadowTexture2D);
             effect.CurrentTechnique.Passes[0].Apply();
-//            spriteBatch.Draw(backgroundTexture2D, new Vector2(0, 0), Color.White);
+            spriteBatch.Draw(backgroundTexture2D, new Vector2(0, 0), Color.White);
 //            spriteBatch.Draw(surgeTexture, new Vector2(0, 0), Color.White);
-            spriteBatch.Draw(shadowTexture2D, new Vector2(0, 0), Color.White);
+//            spriteBatch.Draw(shadowTexture2D, new Vector2(0, 0), Color.White);
 
 
             spriteBatch.End();

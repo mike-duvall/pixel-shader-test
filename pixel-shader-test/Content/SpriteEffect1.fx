@@ -77,34 +77,25 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 	float4 color = tex2D(s0, input.TextureCoordinates);
 	float4 shadow_color = tex2D(shadow_sampler, input.TextureCoordinates);
 
-	// if( colorMatches(shadow_color, 85.0f, 255.0f, 85.0f))
-	// {
-	// 	if(colorMatches(color, 255, 71, 58))
-	// 	{
-	// 		color.r = 119.0f / 255.0f;
-	// 		color.g = 255.0f / 255.0f;
-	// 		color.b = 133.0f / 255.0f;
-	// 	}
-	// 	else {
-	// 		color.rgb = 0.2;				
-	// 	}
-
-	// }
-
-	if(colorMatches(shadow_color, 85.0f, 255.0f, 85.0f)) {
-		color.r = 127.0f / 255.0f;
-		color.g = 238.0f / 255.0f;
-		color.b = 255.0f / 255.0f;
-		// color.r = 0.5f;
-		// color.g = 0.93f;
-		// color.b = 1.0f;
-		// float value = 0.0625f;
-		// color.r = value;
-		// color.g = value;
-		// color.b = value;
-
+	if( colorMatches(shadow_color, 85.0f, 255.0f, 85.0f))
+	{
+		if(colorMatches(color, 255, 71, 58))
+		{
+			color.r = 119.0f / 255.0f;
+			color.g = 255.0f / 255.0f;
+			color.b = 133.0f / 255.0f;
+		}
+		else {
+			color.rgb = 0.2;				
+		}
 
 	}
+
+	// if(colorMatches(shadow_color, 85.0f, 255.0f, 85.0f)) {
+	// 	color.r = 127.0f / 255.0f;
+	// 	color.g = 238.0f / 255.0f;
+	// 	color.b = 255.0f / 255.0f;
+	// }
 
   	return color;
 

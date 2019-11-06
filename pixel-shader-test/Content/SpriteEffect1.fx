@@ -29,62 +29,88 @@ struct VertexShaderOutput
 
 
 
+
+bool colorMatches(float4 color, float red, float green, float blue) 
+{
+	float normalizedRed = red / 255.0f;
+	float normalizedGreen = green / 255.0f;
+	float normalizedBkye = blue / 255.0f;
+
+	float difRed = abs(color.r - normalizedRed);
+	float difGreen = abs(color.g - normalizedGreen);	
+	float difBlue = abs(color.b - normalizedBkye);	
+
+	bool matches = false;
+	if(color.a && difRed < epsilon && difGreen < epsilon && difBlue < epsilon)
+		matches = true;
+
+	return matches;
+
+}
+
+// float4 MainPS(VertexShaderOutput input) : COLOR
+// {
+// 	float4 color = tex2D(s0, input.TextureCoordinates);
+// 	float value = 0.75f;
+// 	if(color.a)
+// 	{
+// 		color.r = value;
+// 		color.g = value;
+// 		color.b = value;
+// 	}	
+
+// 	// if(color.a) {
+// 	// 	color.a = color.a;
+// 	// }
+// 	// else {
+// 	// 	color.a = 1.0f;
+// 	// }
+
+//   	return color;
+
+// }
+
+
+
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float4 color = tex2D(s0, input.TextureCoordinates);
 	float4 shadow_color = tex2D(shadow_sampler, input.TextureCoordinates);
 
+	// if( colorMatches(shadow_color, 85.0f, 255.0f, 85.0f))
+	// {
+	// 	if(colorMatches(color, 255, 71, 58))
+	// 	{
+	// 		color.r = 119.0f / 255.0f;
+	// 		color.g = 255.0f / 255.0f;
+	// 		color.b = 133.0f / 255.0f;
+	// 	}
+	// 	else {
+	// 		color.rgb = 0.2;				
+	// 	}
 
-	float refRed = 85.0f / 255.0f;
-	float refGreen = 1.0f;
-	float refBlue = 85.0f / 255.0f;
+	// }
 
-	float difRed = abs(shadow_color.r - refRed);
-	float difGreen = abs(shadow_color.g - refGreen);	
-	float difBlue = abs(shadow_color.b - refBlue);	
+	if(colorMatches(shadow_color, 85.0f, 255.0f, 85.0f)) {
+		color.r = 127.0f / 255.0f;
+		color.g = 238.0f / 255.0f;
+		color.b = 255.0f / 255.0f;
+		// color.r = 0.5f;
+		// color.g = 0.93f;
+		// color.b = 1.0f;
+		// float value = 0.0625f;
+		// color.r = value;
+		// color.g = value;
+		// color.b = value;
 
-	if(shadow_color.a && difRed < epsilon && difGreen < epsilon && difBlue < epsilon)
-		color.rgb = 0.8;	
 
+	}
 
-	// if (color.a)
- //    	return shadow_color;
-    // else
-    	return color;
+  	return color;
 
 }
 
 
-// float4 MainPS(VertexShaderOutput input) : COLOR
-// {
-// 	float4 color = tex2D(s0, input.TextureCoordinates);
-
-// 	float refRed = 86.0f / 255.0f;
-// 	float refGreen = 1.0f;
-// 	float refBlue = 92.0f / 255.0f;
-
-// 	float difRed = abs(color.r - refRed);
-// 	float difGreen = abs(color.g - refGreen);	
-// 	float difBlue = abs(color.b - refBlue);	
-
-// 	if(color.a && difRed < epsilon && difGreen < epsilon && difBlue < epsilon)
-// 		color.rgb = 0.8;	
-
-
-// 	float pixelToSetX =  testFloat2Array[0].x;
-// 	float pixelToSetY =  testFloat2Array[0].y;
-
-// 	float diff1 = abs(input.TextureCoordinates.x - pixelToSetX);
-// 	float diff2 = abs(input.TextureCoordinates.y - pixelToSetY);
-
-// 	if( (diff1 < epsilon) && (diff2 < epsilon) ) {
-// 		color.b = 1.0f;
-// 		color.rg = 0.0f;
-// 	}
-
-
-// 	return color;
-// }
 
 
 technique SpriteDrawing

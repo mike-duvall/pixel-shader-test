@@ -81,26 +81,53 @@ namespace PixelShaderTest
 
 
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        //        protected override void Draw(GameTime gameTime)
+        //        {
+        //            GraphicsDevice.Clear(Color.CornflowerBlue);
+        //
+        //            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+        ////            effect.Parameters["shadow_sampler"].SetValue(shadowTexture2D);
+        //            effect.CurrentTechnique.Passes[0].Apply();
+        //            spriteBatch.Draw(backgroundTexture2D, new Vector2(0, 0), Color.White);
+        //            spriteBatch.Draw(surgeTexture, new Vector2(0, 0), Color.White);
+        //
+        //            //            spriteBatch.Draw(shadowTexture2D, new Vector2(0, 0), Color.White);
+        //
+        //            spriteBatch.End();
+        //
+        //            base.Draw(gameTime);
+        //        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            RenderTarget2D renderTarget = new RenderTarget2D(GraphicsDevice,surgeTexture.Width, surgeTexture.Height);
+            GraphicsDevice.SetRenderTarget(renderTarget);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-            effect.Parameters["shadow_sampler"].SetValue(shadowTexture2D);
-            effect.CurrentTechnique.Passes[0].Apply();
-            spriteBatch.Draw(backgroundTexture2D, new Vector2(0, 0), Color.White);
-//            spriteBatch.Draw(surgeTexture, new Vector2(0, 0), Color.White);
-//            spriteBatch.Draw(shadowTexture2D, new Vector2(0, 0), Color.White);
 
+            spriteBatch.Draw(backgroundTexture2D, new Vector2(0, 0), Color.White);
+            spriteBatch.Draw(surgeTexture, new Vector2(0, 0), Color.White);
+            spriteBatch.End();
+
+
+            GraphicsDevice.SetRenderTarget(null);
+
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                        effect.Parameters["shadow_sampler"].SetValue(shadowTexture2D);
+            effect.CurrentTechnique.Passes[0].Apply();
+//            spriteBatch.Draw(backgroundTexture2D, new Vector2(0, 0), Color.White);
+//            spriteBatch.Draw(surgeTexture, new Vector2(0, 0), Color.White);
+
+            spriteBatch.Draw(renderTarget, new Vector2(0, 0), Color.White);
+            //            spriteBatch.Draw(shadowTexture2D, new Vector2(0, 0), Color.White);
 
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
 
 
         //        /// <summary>

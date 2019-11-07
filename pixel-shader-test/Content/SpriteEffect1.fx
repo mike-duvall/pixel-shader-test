@@ -10,7 +10,6 @@
 Texture2D SpriteTexture;
 sampler s0;
 float epsilon = 0.001f;
-float2 testFloat2Array[2];
 
 sampler shadow_sampler;
 
@@ -28,17 +27,15 @@ struct VertexShaderOutput
 };
 
 
-
-
 bool colorMatches(float4 color, float red, float green, float blue) 
 {
 	float normalizedRed = red / 255.0f;
 	float normalizedGreen = green / 255.0f;
-	float normalizedBkye = blue / 255.0f;
+	float normalizedBlue = blue / 255.0f;
 
 	float difRed = abs(color.r - normalizedRed);
 	float difGreen = abs(color.g - normalizedGreen);	
-	float difBlue = abs(color.b - normalizedBkye);	
+	float difBlue = abs(color.b - normalizedBlue);	
 
 	bool matches = false;
 	if(color.a && difRed < epsilon && difGreen < epsilon && difBlue < epsilon)
@@ -48,38 +45,15 @@ bool colorMatches(float4 color, float red, float green, float blue)
 
 }
 
-// float4 MainPS(VertexShaderOutput input) : COLOR
-// {
-// 	float4 color = tex2D(s0, input.TextureCoordinates);
-// 	float value = 0.75f;
-// 	if(color.a)
-// 	{
-// 		color.r = value;
-// 		color.g = value;
-// 		color.b = value;
-// 	}	
-
-// 	// if(color.a) {
-// 	// 	color.a = color.a;
-// 	// }
-// 	// else {
-// 	// 	color.a = 1.0f;
-// 	// }
-
-//   	return color;
-
-// }
-
-
 
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float4 color = tex2D(s0, input.TextureCoordinates);
 	float4 shadow_color = tex2D(shadow_sampler, input.TextureCoordinates);
 
-	if( colorMatches(shadow_color, 85.0f, 255.0f, 85.0f))
+	if( shadow_color.a && colorMatches(shadow_color, 85.0f, 255.0f, 85.0f))
 	{
-		if(colorMatches(color, 255, 71, 58))
+		if(color.a && colorMatches(color, 255, 71, 58))
 		{
 			color.r = 119.0f / 255.0f;
 			color.g = 255.0f / 255.0f;
@@ -91,12 +65,12 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 
 	}
 
-	// if(colorMatches(shadow_color, 85.0f, 255.0f, 85.0f)) {
-	// 	color.r = 127.0f / 255.0f;
-	// 	color.g = 238.0f / 255.0f;
-	// 	color.b = 255.0f / 255.0f;
-	// }
+	// color.r = 119.0f / 255.0f;
+	// color.g = 255.0f / 255.0f;
+	// color.b = 133.0f / 255.0f;
 
+
+	
   	return color;
 
 }
